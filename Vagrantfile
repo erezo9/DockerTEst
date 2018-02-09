@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
 		  apache_server.ssh.password = "vagrant"
 		  apache_server.vm.provision "shell", inline: $script
 		  apache_server.vm.provision :ansible do |ansible|
-			ansible.playbook = "install_apache2.yml"
+			ansible.playbook = "playbooks/install_apache2.yml"
 		  end
 	  end
   end
@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
 		"apache_servers" => ["apache_server1","apache_server2"]
 		}
 		ansible.limit = "all"
-		ansible.playbook = "nginxLB.yml"
+		ansible.playbook = "playbooks/install_nginx.yml"
 	end
     end
 end
