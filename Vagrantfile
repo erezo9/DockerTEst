@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   (1..2).each do |n|
 	  config.vm.define "apache_server#{n}" do |apache_server|
 		  apache_server.vm.box = "gbarbieru/xenial"
-		  apache_server.vm.hostname = "apache_server#{n}"
+		  apache_server.vm.hostname = "apacheserver#{n}"
 		  apache_server.vm.network "public_network", :type => 'dhcp', :adapter => 2
 		  apache_server.ssh.password = "vagrant"
 		  apache_server.vm.provision "shell", inline: $script
@@ -36,6 +36,7 @@ Vagrant.configure("2") do |config|
 		"nginx_servers" => ["nginx_server"],
 		"apache_servers" => ["apache_server1","apache_server2"]
 		}
+		ansible.limit = "all"
 		ansible.playbook = "nginxLB.yml"
 	end
     end

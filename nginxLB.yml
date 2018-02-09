@@ -7,20 +7,25 @@
         url: "https://get.docker.com/"
         dest: "/tmp/docker-installation.sh"
         mode: "0744"
+      when: "'nginx_servers' in group_names"
 
     - name: install docker
       shell: "/tmp/docker-installation.sh"
+      when: "'nginx_servers' in group_names"
 
     - name: ensure directory exists
       file: 
         path: "/tmp/conf.d/"
         state: directory
+      when: "'nginx_servers' in group_names"
+
     - name: configure loadbalancer file
       template:
         src: loadbalancer.conf.j2
         dest: /tmp/conf.d/loadbalancer.conf
+      when: "'nginx_servers' in group_names"
 
     - name: run nginx with loadbalancer	   
       shell: docker run --name testnginx -d -p 8080:80 -v /tmp/conf.d:/etc/nginx/conf.d:ro nginx
       become: true
-      #when: "'nginx_servers' in group_names"
+      when: "'nginx_servers' in group_names"
