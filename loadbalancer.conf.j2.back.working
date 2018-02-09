@@ -1,0 +1,3 @@
+      {% for webhost in groups['web_servers'] %}
+    {{ hostvars[webhost]["ansible_all_ipv4_addresses"][1] }}
+   {% endfor %}

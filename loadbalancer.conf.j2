@@ -1,0 +1,23 @@
+upstream backend {
+
+{% for webhost in groups['web_servers'] %}
+   server {{ hostvars[webhost]["ansible_all_ipv4_addresses"][1] }}:80;
+   {% endfor %}
+}
+# This server accepts all traffic to port 80 and passes it to the upstream.
+
+
+
+server {
+
+   listen 80;
+
+
+
+   location / {
+
+      proxy_pass http://backend;
+
+   }
+
+}

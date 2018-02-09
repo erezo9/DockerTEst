@@ -1,0 +1,14 @@
+---
+ - hosts: all
+   become: true
+   tasks:
+     - name: ensure repository key is installed
+       apt:
+        name: "apache2"
+        state: present
+
+     - name: change web file
+       template:
+        src: index.html.j2
+        dest: /var/www/html/index.html
+
