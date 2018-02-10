@@ -1,0 +1,12 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: get var folder size in MB
+      get_folder_size:
+        path: "/var"
+        outputType: "MB"
+      register: size
+    
+    - name: output file
+      debug:
+        msg: "{{ size }}"
