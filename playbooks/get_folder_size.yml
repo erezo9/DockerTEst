@@ -7,6 +7,6 @@
         outputType: "MB"
       register: size
     
-    - name: output file
+    - name: output the size to the user
       debug:
         msg: "{{ size }}"
