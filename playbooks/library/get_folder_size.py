@@ -15,7 +15,7 @@ options:
     aliases: []
   outputType:
     description:
-      - output required (GB,MB,KB,B)
+      - output required (GB,MB,KB)
     required: false
     default: GB
     aliases: []
@@ -28,8 +28,7 @@ import sys
 
 Sizes = {'GB': 'G',
 	 'MB': 'M',
-	 'KB': 'K',
-	 'B' : '1',}
+	 'KB': 'K',}
 
 # Checks if the input given exists, and valids as a directory
 def checkDirectory(module, path):
@@ -47,7 +46,7 @@ def main():
 	module = AnsibleModule(
         argument_spec = dict(
             path = dict(required=True),
-            outputType = dict(required=False, default="GB", choices= ['GB','MB','KB','B']),
+            outputType = dict(required=False, default="GB", choices= ['GB','MB','KB']),
 	),
 	supports_check_mode = False,
 	)
