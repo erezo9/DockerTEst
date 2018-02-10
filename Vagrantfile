@@ -6,6 +6,7 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 
+# this script is used to install python on the target servers becuase ansible is needed
 $script = <<SCRIPT
 pkill apt
 apt-get install -y python
