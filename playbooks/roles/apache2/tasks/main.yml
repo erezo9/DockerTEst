@@ -1,10 +1,10 @@
 ---
-  - name: ensure repository key is installed
+  - name: install apache2 service 
     apt:
       name: "apache2"
       state: present
 
-  - name: change web file
+  - name: replace intro web file
     template:
-      src: index.html.j2
-      dest: /var/www/html/index.html
+      src: "{{apache2_html_file}}.j2"
+      dest: "{{ apache2_html_folder }}{{ apache2_html_file }}"

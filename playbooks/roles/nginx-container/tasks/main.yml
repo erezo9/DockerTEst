@@ -1,28 +1,28 @@
 ---
-  - name: ensure repository key is installed
+  - name: get docker installation script
     get_url:
-      url: "https://get.docker.com/"
-      dest: "/tmp/docker-installation.sh"
+      url: "{{ docker_url }}"
+      dest: "{{ docker_install_script_dir }}{{ docker_install_script }}"
       mode: "0744"
     when: "'nginx_servers' in group_names"
 
-  - name: install docker
-    shell: "/tmp/docker-installation.sh"
+  - name: run docker installation script
+    shell: "{{ docker_install_script_dir }}{{ docker_install_script }}"
     when: "'nginx_servers' in group_names"
 
-  - name: ensure directory exists
+  - name: ensure nginx temp directory exists
     file: 
-      path: "/tmp/conf.d/"
+      path: "{{ nginx_local_dir }}"
       state: directory
     when: "'nginx_servers' in group_names"
 
-  - name: configure loadbalancer file
+  - name: template loadbalancer file
     template:
-      src: loadbalancer.conf.j2
-      dest: /tmp/conf.d/loadbalancer.conf
+      src: "{{ nginx_lb_file }}.j2"
+      dest: "{{ nginx_local_dir}}{{ nginx_lb_file }}"
     when: "'nginx_servers' in group_names"
 
-  - name: run nginx with loadbalancer	   
-    shell: docker run --name testnginx -d -p 8080:80 -v /tmp/conf.d:/etc/nginx/conf.d:ro nginx
+  - name: run nginx container with loadbalancer file
+    shell: "docker run --name nginx -d -p 8080:80 -v {{ nginx_local_dir }}:{{ nginx_lb_dir }}:ro nginx"
     become: true
     when: "'nginx_servers' in group_names"

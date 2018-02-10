@@ -1,0 +1,11 @@
+---
+apache2_html_folder: "/var/www/html/"
+apache2_html_file: "index.html"
+
+docker_url: "https://get.docker.com/"
+docker_install_script: "docker_installation.sh"
+docker_install_script_dir: "/tmp/"
+
+nginx_local_dir: "/tmp/conf.d/"
+nginx_lb_file: "loadbalancer.conf"
+nginx_lb_dir: "/etc/nginx/conf.d/"
